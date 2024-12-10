@@ -1,16 +1,27 @@
 import { useState } from "react";
+import TodoItem from "./TodoItem";
 
 const Todo = () => {
-  const [todos, setTodos] = useState([{ name: "homework" }]);
+  const [todos, setTodos] = useState([{ name: "homework", id: Math.random() }]);
   const [inputState, setInputState] = useState("");
 
   const handleAddTodo = () => {
-    setTodos((prev) => [...prev, { name: inputState }]);
+    if (inputState.trim() === "") return; // Prevent adding empty todos
+    setTodos((prev) => [...prev, { name: inputState, id: Math.random() }]);
     setInputState("");
   };
 
-  const handleDeleteTodo = (name) => {
-    setTodos((prev) => prev.filter((todo) => todo.name !== name));
+  const handleDeleteTodo = (idDeleted) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== idDeleted));
+  };
+
+  const handleUpdateTodo = (id, newName) => {
+    const cloneTodo = [...todos];
+    const findUpdate = cloneTodo.find((item) => item.id === id);
+    if (findUpdate) {
+      findUpdate.name = newName;
+      setTodos(cloneTodo);
+    }
   };
 
   return (
@@ -20,7 +31,6 @@ const Todo = () => {
         value={inputState}
         onChange={(e) => {
           setInputState(e.target.value);
-          console.log("input: ", e.target.value);
         }}
       />
 
@@ -35,22 +45,14 @@ const Todo = () => {
           flexDirection: "column",
         }}
       >
-        {todos.map((item, index) => {
-          return (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 2,
-              }}
-            >
-              <h1 key={index}>{item.name}</h1>
-              <span onClick={() => handleDeleteTodo(item.name)}>Delete</span>
-            </div>
-          );
-        })}
+        {todos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            handleUpdateTodo={handleUpdateTodo}
+            handleDeleteTodo={handleDeleteTodo}
+          />
+        ))}
       </div>
     </div>
   );
