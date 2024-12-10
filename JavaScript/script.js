@@ -101,6 +101,23 @@ const { name: newName, price: newPrice } = obj;
 console.log("newName:", name);
 console.log("newPrice:", newPrice);
 
+const getPerson = () => {
+  return {
+    age1: 23,
+    city: "Da Nang",
+    fullName: {
+      firstName: "John",
+      lastName: "Doe",
+    },
+  };
+};
+const {
+  age1,
+  city,
+  fullName: { firstName, lastName },
+} = getPerson();
+console.log({ age1, city, firstName, lastName });
+
 // enhance object literal
 const person = { name1: "John Doe", age: 30 };
 const { name1, age, ...rest } = person;
