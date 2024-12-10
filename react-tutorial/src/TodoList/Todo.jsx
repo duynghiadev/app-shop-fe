@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import TodoItem from "./TodoItem";
 
 const Todo = () => {
   const [todos, setTodos] = useState([{ name: "homework", id: Math.random() }]);
   const [inputState, setInputState] = useState("");
+  const refInput = useRef(null);
+  console.log("refInput", refInput);
 
   const handleAddTodo = () => {
     if (inputState.trim() === "") return; // Prevent adding empty todos
     setTodos((prev) => [...prev, { name: inputState, id: Math.random() }]);
     setInputState("");
+    refInput.current.focus();
   };
 
   const handleDeleteTodo = (idDeleted) => {
@@ -27,6 +30,7 @@ const Todo = () => {
   return (
     <div>
       <input
+        ref={refInput}
         type="text"
         value={inputState}
         onChange={(e) => {
