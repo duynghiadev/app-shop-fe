@@ -88,3 +88,24 @@ function sum(...numbers) {
   }, 0);
 }
 console.log("sum:", sum(1, 2, 3, 4, 5));
+
+// template string
+const name = "javascript";
+const price = 200;
+const message = `I bought ${name} at $${price}`;
+console.log("message:", message);
+
+// destructuring
+const obj = { name: "javascript", price: 200 };
+const { name: newName, price: newPrice } = obj;
+console.log("newName:", name);
+console.log("newPrice:", newPrice);
+
+// enhance object literal
+const person = { name1: "John Doe", age: 30 };
+const { name1, age, ...rest } = person;
+const updateRest = { ...rest, job: "Developer", location: "New York" };
+console.log("name1:", name1);
+console.log("age:", age);
+console.log("rest:", rest);
+console.log("updateRest:", updateRest);
