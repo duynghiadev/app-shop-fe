@@ -3,7 +3,8 @@ import { CountContext } from "../App1";
 
 const Component3 = () => {
   const { count, handleIncrease } = useContext(CountContext);
-  console.log("count:", count);
+  console.log("count in component 3:", count);
+  console.log("handleIncrease in component 3:", handleIncrease);
 
   return (
     <div>
