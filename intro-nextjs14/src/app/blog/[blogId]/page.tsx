@@ -1,10 +1,29 @@
-"use client";
+import { Metadata } from "next";
 
-import { useParams } from "next/navigation";
+interface Props {
+  params: {
+    blogId: string;
+  };
+}
 
-export default function Index() {
-  const params = useParams();
-  console.log("params", params);
+export const generateMetadata = async ({
+  params,
+}: Props): Promise<Metadata> => {
+  const nameBlog = await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Blog duy nghia");
+    }, 200);
+  });
+
+  return {
+    title: {
+      absolute: `Blog Detail - ${nameBlog}`,
+    },
+  };
+};
+
+export default function Index({ params }: Props) {
+  console.log("params", { params });
 
   return (
     <div>
