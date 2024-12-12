@@ -13,7 +13,8 @@ export default function NotFound() {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <h1>Not Found</h1>
+        <h1>Not Found Page</h1>
+        <p>We cannot find page</p>
       </body>
     </html>
   );
