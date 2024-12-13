@@ -8,5 +8,9 @@ export const generateMetadata = () => {
 };
 
 export default function Home() {
-  return <main className={styles.main}>Blog Page</main>;
+  return (
+    <main>
+      <h1>Blog Page</h1>
+    </main>
+  );
 }

@@ -49,6 +49,17 @@ export default function Home() {
       >
         Go to login page
       </Link>
+      <Link
+        href="/blog"
+        style={{
+          margin: "10px 0",
+          color: "#0070f3",
+          textDecoration: "none",
+          fontSize: "18px",
+        }}
+      >
+        Go to blog page
+      </Link>
       <footer style={{ marginTop: "30px", color: "#777", fontSize: "14px" }}>
         &copy; 2024 Your Website. All rights reserved.
       </footer>
