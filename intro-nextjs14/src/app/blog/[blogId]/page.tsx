@@ -25,6 +25,11 @@ export const generateMetadata = async ({
 export default function Index({ params }: Props) {
   console.log("params", { params });
 
+  const random = Math.floor(Math.random() * 2);
+  if (random === 1) {
+    throw new Error("Error in blog");
+  }
+
   return (
     <div>
       <div style={{ display: "flex", flexDirection: "column" }}>
