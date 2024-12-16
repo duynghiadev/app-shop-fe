@@ -37,3 +37,36 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+export async function GET(req: NextRequest) {
+  try {
+    const limit = req.nextUrl.searchParams.get("limit") ?? 2;
+    const page = req.nextUrl.searchParams.get("page") ?? 1;
+    const totalPosts = await Post.countDocuments();
+    const totalPages = Math.ceil(totalPosts / +limit);
+    const allPosts = await Post.find()
+      .skip((+page - 1) * +limit)
+      .limit(+limit);
+
+    return NextResponse.json(
+      {
+        data: allPosts,
+        meta: {
+          totalPages,
+          totalCount: totalPosts,
+        },
+        message: "Success",
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log({ error });
+    return NextResponse.json(
+      {
+        data: null,
+        message: "Error",
+      },
+      { status: 400, statusText: "Failed" }
+    );
+  }
+}
