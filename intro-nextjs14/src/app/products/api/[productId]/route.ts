@@ -64,3 +64,34 @@ export async function PATCH(req: Request, context: any) {
     { status: 400, statusText: "Error" }
   );
 }
+
+export async function DELETE(req: Request, context: any) {
+  const productId = context?.params?.productId;
+  const indexDeleted = listProducts.findIndex(
+    (item) => item.id === parseInt(productId)
+  );
+
+  if (indexDeleted !== -1) {
+    const deletedProduct = listProducts[indexDeleted];
+    listProducts.splice(indexDeleted, 1);
+
+    return NextResponse.json(
+      {
+        data: {
+          message: "Deleted success",
+          data: deletedProduct,
+        },
+      },
+      { status: 200, statusText: "Success" }
+    );
+  }
+
+  return NextResponse.json(
+    {
+      data: {
+        message: "Product not found",
+      },
+    },
+    { status: 400, statusText: "Error" }
+  );
+}
