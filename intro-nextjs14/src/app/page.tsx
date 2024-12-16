@@ -2,6 +2,8 @@
 import Link from "next/link";
 
 export default function Home() {
+  console.log("Home server component");
+
   return (
     <main
       style={{
@@ -59,6 +61,17 @@ export default function Home() {
         }}
       >
         Go to blog page
+      </Link>
+      <Link
+        href="/about"
+        style={{
+          margin: "10px 0",
+          color: "#0070f3",
+          textDecoration: "none",
+          fontSize: "18px",
+        }}
+      >
+        Go to about page
       </Link>
       <footer style={{ marginTop: "30px", color: "#777", fontSize: "14px" }}>
         &copy; 2024 Your Website. All rights reserved.
