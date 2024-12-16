@@ -1,4 +1,5 @@
 import { listProducts } from "@/app/data";
+import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 
 export function GET(req: Request, context: any) {
@@ -15,17 +16,20 @@ export function GET(req: Request, context: any) {
       }
     );
   }
-  return NextResponse.json(
-    {
-      data: {
-        message: "Product not found",
-      },
-    },
-    {
-      status: 400,
-      statusText: "Error",
-    }
-  );
+
+  redirect("/products/api");
+
+  // return NextResponse.json(
+  //   {
+  //     data: {
+  //       message: "Product not found",
+  //     },
+  //   },
+  //   {
+  //     status: 400,
+  //     statusText: "Error",
+  //   }
+  // );
 }
 
 export async function PATCH(req: Request, context: any) {
