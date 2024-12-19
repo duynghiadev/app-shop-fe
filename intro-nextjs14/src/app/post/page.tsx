@@ -1,7 +1,6 @@
 "use client";
 
 import { ChangeEvent, useEffect, useState } from "react";
-import styles from "../page.module.css";
 import Link from "next/link";
 
 export interface TPost {
@@ -25,17 +24,15 @@ export default function ListPost() {
   });
 
   const fetchListPost = async () => {
-    fetch(
+    const res = await fetch(
       `http://localhost:3000/post/api?limit=${params.limit}&page=${params.page}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("List Posts:", { data }, { data });
-        setListPost({
-          data: data.data,
-          totalPage: data?.meta.totalPages,
-        });
-      });
+    );
+    const data = await res.json();
+    console.log("List Posts:", { data });
+    setListPost({
+      data: data.data,
+      totalPage: data?.meta.totalPages,
+    });
   };
 
   useEffect(() => {
@@ -43,29 +40,27 @@ export default function ListPost() {
   }, [params.page]);
 
   const handleDeletePost = async (id: string) => {
-    fetch(`http://localhost:3000/post/api/${id}`, { method: "DELETE" })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Delete Posts:", { data }, { data });
-        if (data.message === "Success") {
-          fetchListPost();
-        }
-      });
+    const res = await fetch(`http://localhost:3000/post/api/${id}`, {
+      method: "DELETE",
+    });
+    const data = await res.json();
+    console.log("Delete Posts:", { data });
+    if (data.message === "Success") {
+      fetchListPost();
+    }
   };
 
-  const handleCreate = () => {
-    fetch(`http://localhost:3000/post/api`, {
+  const handleCreate = async () => {
+    const res = await fetch(`http://localhost:3000/post/api`, {
       method: "POST",
       body: JSON.stringify({ ...inputState }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Create Posts:", { data }, { data });
-        if (data.message === "Success") {
-          fetchListPost();
-          setInputState({ title: "", description: "" });
-        }
-      });
+    });
+    const data = await res.json();
+    console.log("Create Posts:", { data });
+    if (data.message === "Success") {
+      fetchListPost();
+      setInputState({ title: "", description: "" });
+    }
   };
 
   const handleOnChangeInput = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,7 +1,6 @@
 "use client";
 
 import { ChangeEvent, useEffect, useState } from "react";
-import styles from "../../page.module.css";
 import { TPost } from "@/app/post/page";
 
 export default function PostDetail({ params }: { params: { postId: string } }) {
@@ -22,28 +21,24 @@ export default function PostDetail({ params }: { params: { postId: string } }) {
   };
 
   const fetchDetailsPost = async () => {
-    fetch(`http://localhost:3000/post/api/${postId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Detail Posts:", { data }, { data });
-        setDataPost(data.data);
-      });
+    const res = await fetch(`http://localhost:3000/post/api/${postId}`);
+    const data = await res.json();
+    console.log("Detail Posts:", { data });
+    setDataPost(data.data);
   };
 
-  const handleUpdatePost = () => {
-    fetch(`http://localhost:3000/post/api/${postId}`, {
+  const handleUpdatePost = async () => {
+    const res = await fetch(`http://localhost:3000/post/api/${postId}`, {
       method: "PUT",
       body: JSON.stringify({ ...inputState }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Create Posts:", { data }, { data });
-        if (data.message === "Success") {
-          fetchDetailsPost();
-          setIsEdit(false);
-          setInputState({ title: "", description: "" });
-        }
-      });
+    });
+    const data = await res.json();
+    console.log("Update Posts:", { data });
+    if (data.message === "Success") {
+      fetchDetailsPost();
+      setIsEdit(false);
+      setInputState({ title: "", description: "" });
+    }
   };
 
   useEffect(() => {
