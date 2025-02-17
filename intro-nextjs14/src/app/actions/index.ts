@@ -7,10 +7,11 @@ export async function getListPost(limit: number, page: number) {
     `http://localhost:3000/post/api?limit=${limit}&page=${page}`,
     {
       next: { tags: ["list-post"] },
+      cache: "no-store",
     }
   );
   const data = await res.json();
-  const totalPage = data?.meta.totalPage;
+  const totalPage = data?.meta?.totalPage;
 
   return {
     data: data.data,

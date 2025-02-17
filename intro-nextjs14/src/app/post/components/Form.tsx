@@ -1,8 +1,8 @@
 "use client";
 import { createPost } from "@/app/actions";
 import ButtonCreate from "@/app/post/components/ButtonCreate";
-import { useEffect } from "react";
-import { useFormState } from "react-dom";
+import { useEffect, useRef } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 
 const initialState = {
   message: "",
@@ -10,6 +10,9 @@ const initialState = {
 
 const Form = () => {
   const [state, formAction] = useFormState(createPost, initialState);
+  const refForm = useRef<HTMLFormElement | null>(null);
+  const { pending } = useFormStatus();
+
   console.log({ state, formAction });
 
   useEffect(() => {
@@ -19,7 +22,13 @@ const Form = () => {
   }, [state.message]);
 
   return (
-    <form action={formAction}>
+    <form
+      action={(formData: FormData) => {
+        formAction(formData);
+        refForm?.current?.reset();
+      }}
+      ref={refForm}
+    >
       <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
         <label htmlFor="title">Title</label>
         <input id="title" name="title" />
@@ -28,7 +37,7 @@ const Form = () => {
         <label htmlFor="description">Description</label>
         <input id="description" name="description" />
       </div>
-      <ButtonCreate />
+      <button id="submit">{pending ? "Loading Create" : "Create"}</button>;
     </form>
   );
 };
